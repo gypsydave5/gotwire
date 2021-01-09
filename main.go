@@ -7,6 +7,7 @@ import (
 	"github.com/notnil/chess/image"
 
 	"html/template"
+	"os"
 	"net/http"
 	"nhooyr.io/websocket"
 )
@@ -118,6 +119,11 @@ func router() http.Handler {
 
 func main() {
 	fmt.Println("hello")
+	port, ok := os.LookupEnv("PORT")
+	if !ok {
+		port = "9999"
+	}
 
-	http.ListenAndServe(":9999", router())
+	fmt.Printf("Listening on port %s\n", port)
+	http.ListenAndServe(fmt.Sprintf(":%s", port), router())
 }
