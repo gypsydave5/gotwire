@@ -1,6 +1,27 @@
 <html lang="en">
 <head>
-    <script type="module" src="https://cdn.skypack.dev/@hotwired/turbo"></script>
+    {{/* if we weren't doing websockets the next line would be all we need*/}}
+{{/*    <script type="module"  async=false defer=false src="https://cdn.skypack.dev/@hotwired/turbo"></script>*/}}
+    <script type="module">
+        // look ma modules in my browser required from URLs
+        import * as Turbo from 'https://cdn.skypack.dev/@hotwired/turbo';
+
+        // ws url - see main.go
+        const url = "ws://" + document.location.host + "/chess_board/ws";
+        const ws = new WebSocket(url);
+
+        //Log the messages that are returned from the server - this is just for debugging
+        ws.onmessage = function (e) {
+            console.log("From Server:"+ e.data)
+        };
+
+        // register the ws as a turbo stream source
+        Turbo.connectStreamSource(ws)
+
+        // debug lines
+        document.addEventListener('turbo:before-stream-render', () => console.log('before stream render'))
+        document.addEventListener('turbo:click', () => console.log('click'))
+    </script>
     <meta charset="utf-8">
     <title>GotWire - Chess</title>
 </head>
@@ -10,13 +31,13 @@
 <turbo-frame id="chess_board" src="/chess_board">
 </turbo-frame>
 
-<form action="/chess_board/move" data-turbo-frame="chess_board">
+<form action="/chess_board/move" data-turbo-frame="chess_board" method="post">
     <input type="text" name="move">
 </form>
 
 <turbo-frame id="new_note" src="/notes/new"></turbo-frame>
 
-{{range . }}
+{{ range . }}
 {{ template "note.gohtml" . }}
 {{ end }}
 </body>
