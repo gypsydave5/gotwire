@@ -7,7 +7,7 @@
         import * as Turbo from 'https://cdn.skypack.dev/@hotwired/turbo';
 
         // ws url - see main.go
-        const url = "ws://" + document.location.host + "/chess_board/ws";
+        const url = "wss://" + document.location.host + "/chess_board/ws";
         const ws = new WebSocket(url);
 
         //Log the messages that are returned from the server - this is just for debugging
