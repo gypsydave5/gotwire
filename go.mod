@@ -7,4 +7,4 @@ require (
 	nhooyr.io/websocket v1.8.6
 )
 
-// +heroku goVersion 15
+// +heroku goVersion 1.15
