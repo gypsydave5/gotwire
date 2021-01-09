@@ -31,7 +31,7 @@ func router() http.Handler {
 	})
 
 	mux.HandleFunc("/chess", func(writer http.ResponseWriter, request *http.Request) {
-		t.ExecuteTemplate(writer, "chess.gohtml", notes)
+		t.ExecuteTemplate(writer, "chess.gohtml", "")
 	})
 
 	// Ws handler
