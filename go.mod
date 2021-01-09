@@ -6,3 +6,5 @@ require (
 	github.com/notnil/chess v1.4.0
 	nhooyr.io/websocket v1.8.6
 )
+
+// +heroku goVersion 15
