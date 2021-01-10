@@ -31,8 +31,12 @@
 <turbo-frame id="chess_board" src="/chess_board">
 </turbo-frame>
 
-<form action="/chess_board/move" data-turbo-frame="chess_board" method="post">
+<form action="/chess_board/move" method="post">
     <input type="text" name="move">
+</form>
+
+<form action="/chess_board/reset" method="post">
+    <input type="submit" name="reset">
 </form>
 
 <turbo-frame id="new_note" src="/notes/new"></turbo-frame>

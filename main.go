@@ -7,9 +7,9 @@ import (
 	"github.com/notnil/chess/image"
 
 	"html/template"
-	"os"
 	"net/http"
 	"nhooyr.io/websocket"
+	"os"
 )
 
 func templates() *template.Template {
@@ -24,7 +24,6 @@ func router() http.Handler {
 	// WORLD'S DUMBEST PUB/SUB TM
 	var conns []*websocket.Conn
 
-
 	mux := http.NewServeMux()
 	t := templates()
 	mux.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
@@ -37,8 +36,9 @@ func router() http.Handler {
 
 	// Ws handler
 	mux.HandleFunc("/chess_board/ws", func(writer http.ResponseWriter, request *http.Request) {
-		var err error
-		conn, err := websocket.Accept(writer, request, &websocket.AcceptOptions{})
+		conn, err := websocket.Accept(writer, request, &websocket.AcceptOptions{
+			InsecureSkipVerify: true,
+		})
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -80,7 +80,7 @@ func router() http.Handler {
 			  }`)
 		}
 
-		 // http.Redirect(writer, request, "/chess_board", 303)
+		// http.Redirect(writer, request, "/chess_board", 303)
 	})
 
 	//mux.HandleFunc("/notes/new", func(writer http.ResponseWriter, request *http.Request) {
