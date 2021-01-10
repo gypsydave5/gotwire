@@ -36,6 +36,9 @@ func router() http.Handler {
 
 	// Ws handler
 	mux.HandleFunc("/chess_board/ws", func(writer http.ResponseWriter, request *http.Request) {
+		for key, value := range request.Header {
+			fmt.Printf("%s : %s\n", key, value)
+		}
 		conn, err := websocket.Accept(writer, request, &websocket.AcceptOptions{
 			InsecureSkipVerify: true,
 		})
