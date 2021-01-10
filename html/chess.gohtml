@@ -6,6 +6,8 @@
         // look ma modules in my browser required from URLs
         import * as Turbo from 'https://cdn.skypack.dev/@hotwired/turbo';
 
+        console.log('Running this module script')
+
         // ws url - see main.go
         const url = "wss://" + document.location.host + "/chess_board/ws";
         const ws = new WebSocket(url);
@@ -15,12 +17,17 @@
             console.log("From Server:"+ e.data)
         };
 
+        ws.onclose = (e) => {
+            console.log(`close ws: ${e}`)
+        }
+
         // register the ws as a turbo stream source
         Turbo.connectStreamSource(ws)
 
         // debug lines
         document.addEventListener('turbo:before-stream-render', () => console.log('before stream render'))
         document.addEventListener('turbo:click', () => console.log('click'))
+
     </script>
     <meta charset="utf-8">
     <title>GotWire - Chess</title>
