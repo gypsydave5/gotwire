@@ -66,6 +66,7 @@ func router() http.Handler {
 		// for each ws conn registered, send the turbo stream with the updated board
 		// todo: make the board turbo-frame into a gohtml template to deuglify this
 		for _, conn := range conns {
+			fmt.Printf("Broadcasting to %s\n", conn)
 			wsWriter, _ := conn.Writer(context.TODO(), websocket.MessageText)
 			defer wsWriter.Close()
 			fmt.Fprint(wsWriter, `{ 
